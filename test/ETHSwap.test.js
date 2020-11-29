@@ -7,6 +7,12 @@ require('chai')
   .use(require('chai-as-promised'))
   .should()
 
+// Convert the values into wei
+// Wei is the smallest value of ether
+function tokens(n) {
+    return web3.utils.toWei(n, 'ether');
+}
+
 contract('EthSwap', (accounts) => {
     let token;
     let ethSwap;
@@ -15,7 +21,7 @@ contract('EthSwap', (accounts) => {
         token = await Token.new();
         ethSwap = await ETHSwap.new();
 
-        await token.transfer(ethSwap.address, '1000000000000000000000000');
+        await token.transfer(ethSwap.address, tokens('100000'));
     })
 
     describe('Token deployment', async () => {
@@ -33,7 +39,7 @@ contract('EthSwap', (accounts) => {
 
         it('contract has tokens', async () => {
             let balance = await token.balanceOf(ethSwap.address);
-            assert.equal(balance.toString(), '1000000000000000000000000');
+            assert.equal(balance.toString(), tokens('100000'));
         })
     })
 })
