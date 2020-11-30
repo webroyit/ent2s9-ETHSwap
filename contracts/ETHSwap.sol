@@ -18,6 +18,14 @@ contract ETHSwap {
     uint rate
   );
 
+  // For showing history of token purchased
+  event TokenSold(
+    address account,
+    address token,
+    uint amount,
+    uint rate
+  );
+
   // Set the location of Token.sol
   constructor(Token _token) public {
     token = _token;
@@ -42,8 +50,14 @@ contract ETHSwap {
   }
 
   function sellTokens(uint _amount) public {
+    // User cannot sell more tokens then they have
+    require(token.balanceOf(msg.sender) >= _amount);
+    
     // Calculate the amount of ETH to redeem
     uint etherAmount = _amount / rate;
+
+    // Require that EthSwap has enough ETH
+    require(address(this).balance >= etherAmount);
 
     // Perform sale
     // transferFrom() allow this contract to spend your tokens for you
@@ -52,5 +66,8 @@ contract ETHSwap {
 
     // transfer() send ETH to the person that call this function
     msg.sender.transfer(etherAmount);
+
+    // Emit an event
+    emit TokenSold(msg.sender, address(token), _amount, rate);
   }
 }
