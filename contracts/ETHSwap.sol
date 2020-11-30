@@ -40,4 +40,17 @@ contract ETHSwap {
     // Emit an event
     emit TokenPurchased(msg.sender, address(token), tokenAmount, rate);
   }
+
+  function sellTokens(uint _amount) public {
+    // Calculate the amount of ETH to redeem
+    uint etherAmount = _amount / rate;
+
+    // Perform sale
+    // transferFrom() allow this contract to spend your tokens for you
+    // You mush call approve() for transferFrom() to work
+    token.transferFrom(msg.sender, address(this), _amount);
+
+    // transfer() send ETH to the person that call this function
+    msg.sender.transfer(etherAmount);
+  }
 }
