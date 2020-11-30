@@ -10,6 +10,14 @@ contract ETHSwap {
   // It need to know the location of Token.sol
   Token public token;
 
+  // For showing history of token purchased
+  event TokenPurchased(
+    address account,
+    address token,
+    uint amount,
+    uint rate
+  );
+
   // Set the location of Token.sol
   constructor(Token _token) public {
     token = _token;
@@ -25,5 +33,8 @@ contract ETHSwap {
     // msg is a global variable in solidity
     // sender is an address that is calling this function
     token.transfer(msg.sender, tokenAmount);
+
+    // Emit an event
+    emit TokenPurchased(msg.sender, address(token), tokenAmount, rate);
   }
 }
