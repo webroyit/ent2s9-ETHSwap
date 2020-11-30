@@ -30,6 +30,9 @@ contract ETHSwap {
     // Calculate the number of tokens to buy
     uint tokenAmount = msg.value * rate;
 
+    // Require that EthSwap has enough tokens
+    require(token.balanceOf(address(this)) >= tokenAmount);
+
     // msg is a global variable in solidity
     // sender is an address that is calling this function
     token.transfer(msg.sender, tokenAmount);
