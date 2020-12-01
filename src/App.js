@@ -78,9 +78,8 @@ class App extends Component{
   render(){
     return (
       <div>
-        <Navbar />
+        <Navbar account={this.state.account} />
         <h1 className="text-center mt-5">ETH Swap</h1>
-        <p>Account: {this.state.account}</p>
         <p>Eth: {this.state.ethBalance}</p>
         <p>Token: {this.state.tokenBalance}</p>
       </div>
