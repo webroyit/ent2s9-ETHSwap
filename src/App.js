@@ -5,6 +5,7 @@ import './App.css';
 import Token from './abis/Token.json';
 import EthSwap from './abis/ETHSwap.json';
 import Navbar from './components/Navbar';
+import Main from './components/Main';
 
 class App extends Component{
   constructor(props) {
@@ -14,7 +15,8 @@ class App extends Component{
       token: {},
       ethSwap: {},
       ethBalance: '0',
-      tokenBalance: '0'
+      tokenBalance: '0',
+      loading: true
     }
   }
 
@@ -73,15 +75,30 @@ class App extends Component{
     else {
       window.alert('EthSwap contract not deployed to detected network.');
     }
+
+    this.setState({ loading: false });
   }
 
   render(){
+    let content;
+
+    if (this.state.loading) {
+      content = <p id="loader" className="text-center">Loading...</p>
+    }
+    else {
+      content = <Main />
+    }
+
     return (
       <div>
         <Navbar account={this.state.account} />
-        <h1 className="text-center mt-5">ETH Swap</h1>
-        <p>Eth: {this.state.ethBalance}</p>
-        <p>Token: {this.state.tokenBalance}</p>
+        <div className="container-fluid mt-5">
+          <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
+            <div className="content mr-auto ml-auto">
+              {content}
+            </div>
+          </main>
+        </div>
       </div>
     );
   }
