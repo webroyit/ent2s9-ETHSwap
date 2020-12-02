@@ -4,6 +4,12 @@ import tokenLogo from '../assets/token-logo.png';
 import ethLogo from '../assets/eth-logo.png';
 
 class Main extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      output: '0'
+    }
+  }
 
   render() {
     return (
@@ -20,6 +26,13 @@ class Main extends Component {
               <div className="input-group mb-4">
                 <input
                   type="text"
+                  onChange={(event) => {
+                    const ethAmount = this.input.value.toString();
+                    this.setState({
+                      output: ethAmount * 100
+                    });
+                  }}
+                  ref={(input) => { this.input = input }}
                   className="form-control form-control-lg"
                   placeholder="0"
                   required />
@@ -41,6 +54,7 @@ class Main extends Component {
                   type="text"
                   className="form-control form-control-lg"
                   placeholder="0"
+                  value={this.state.output}
                   disabled
                 />
                 <div className="input-group-append">
