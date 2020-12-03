@@ -13,7 +13,12 @@ class SellForm extends Component {
 
   render() {
     return (
-        <form className="mb-3">
+        <form className="mb-3" onSubmit={(event) => {
+            event.preventDefault();
+            let ethAmount = this.input.value.toString();
+            ethAmount = window.web3.utils.toWei(ethAmount, 'Ether');
+            this.props.sellTokens(ethAmount);
+        }}>
             <div>
               <label className="float-left"><b>Input</b></label>
               <span className="float-right text-muted">
