@@ -1,4 +1,9 @@
 # ETH Swap
+Cryptocurrency Exchange. The template is from Dapp University youtube channel.
+
+## What it does?
+- You can buy tokens with ETH
+- You can sell tokens for ETH
 
 # Packages
 - `identicon.js` to generate random icon
